@@ -9,6 +9,7 @@ const STATIC_ROOT = "./static";
 const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
+app.set("trust proxy", true);
 app.use("/static", express.static(STATIC_ROOT));
 app.use(cors())
 app.get("/api/*", async (req: express.Request<{ 0: string }>, res) => {
