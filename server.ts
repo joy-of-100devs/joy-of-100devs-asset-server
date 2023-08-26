@@ -11,7 +11,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.set("trust proxy", true);
 app.use("/static", express.static(STATIC_ROOT));
-app.use(cors())
+app.use(cors());
 app.get("/api/*", async (req: express.Request<{ 0: string }>, res) => {
     const slug = req.params[0];
     const filePath = path.join(STATIC_ROOT, slug);
@@ -26,7 +26,7 @@ app.get("/api/*", async (req: express.Request<{ 0: string }>, res) => {
     }
     const image = await sharp(data);
     const meta = await image.metadata();
-    const fileURL = path.join(`${req.protocol}://${req.get("host")}`, STATIC_ROOT, slug).replaceAll("\\", "/");
+    const fileURL = new URL(path.join(STATIC_ROOT, slug), `${req.protocol}://${req.get("host")}`);
     res.json({
         success: true,
         data: {
