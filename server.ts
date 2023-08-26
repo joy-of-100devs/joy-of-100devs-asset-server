@@ -34,4 +34,4 @@ app.get("/api/*", async (req: express.Request<{ 0: string }>, res) => {
     });
 });
 
-app.listen(8000);
+app.listen(process.env.PORT || 8000);
