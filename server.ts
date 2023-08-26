@@ -3,10 +3,12 @@ import * as path from "path";
 import * as fs from "fs";
 import sharp from 'sharp';
 import cors from 'cors';
+import morgan from 'morgan';
 
 const STATIC_ROOT = "./static";
 const app = express();
 app.use(express.json());
+app.use(morgan("dev"));
 app.use("/static", express.static(STATIC_ROOT));
 app.use(cors())
 app.get("/api/*", async (req: express.Request<{ 0: string }>, res) => {
